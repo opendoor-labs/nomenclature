@@ -6,6 +6,7 @@ class InstallController < ApplicationController
       client_secret: Rails.application.secrets.slack_secret,
     }
     response = Excon.post('https://slack.com/api/oauth.access', body: URI.encode_www_form(oauth_params))
+    Rails.logger.error(response.inspect)
     data = JSON.parse(response.body)
     team = Team.find_or_initialize_by(slack_team_id: data['team_id'])
     team.update_attributes!(
