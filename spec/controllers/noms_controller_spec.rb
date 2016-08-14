@@ -82,9 +82,19 @@ describe NomsController do
       }
     }
 
-    it 'defines a word' do
+    it 'defines a term' do
       expect {
         process :define, method: :post, params: params
+        expect(response.status).to be(200)
+      }.to change(Term, :count).by(1)
+      data = JSON.parse(response.body)
+      expect(data['response_type']).to eq('ephemeral')
+      expect(data['text']).to eq('eat: to eat food')
+    end
+
+    it 'defines a term without a colon' do
+      expect {
+        process :define, method: :post, params: params.merge(text: 'eat to eat food')
         expect(response.status).to be(200)
       }.to change(Term, :count).by(1)
       data = JSON.parse(response.body)

@@ -15,7 +15,7 @@ class NomsController < ApplicationController
   end
 
   def define
-    name, description = params[:text].split(':', 2).map(&:strip)
+    name, description = params[:text].split(/[:?\s]/, 2).map(&:strip)
     if name.present? && description.present?
       term = @team.terms.find_or_initialize_by(name: name)
       term.update_attributes!(name: name, description: description)
