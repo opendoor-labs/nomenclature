@@ -1,0 +1,13 @@
+first:
+  slack_team_id: 'abc123'
+  team_name: 'hello world'
+  access_token: 'xoxp-23984754863-2348975623103'
+  install_scope: 'identify,commands'
+  installing_user_id: 'U1234'
+
+second:
+  slack_team_id: 'abc42'
+  team_name: 'other team'
+  access_token: 'xoxp-xxxxxxxxxxxxxx'
+  install_scope: 'identify,commands'
+  installing_user_id: 'U1234'
