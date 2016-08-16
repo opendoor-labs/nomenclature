@@ -112,6 +112,16 @@ describe NomsController do
       expect(data['text']).to eq('NOM: to nom a thing')
     end
 
+    it 'handles multi word terms' do
+      expect {
+        process :define, method: :post, params: params.merge(text: 'Open House: Our all hands')
+        expect(response.status).to be(200)
+      }.to change(Term, :count).by(1)
+      term = Term.last
+      expect(term.name).to eq('Open House')
+      expect(term.description).to eq('Our all hands')
+    end
+
     it 'handles a missing description' do
       expect {
         process :define, method: :post, params: params.merge(text: 'NOM: ')

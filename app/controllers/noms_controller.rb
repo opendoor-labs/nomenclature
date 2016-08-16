@@ -15,10 +15,8 @@ class NomsController < ApplicationController
   end
 
   def define
-    name, description = params[:text].split(/[:?\s]/, 2).map(&:strip)
-    if name.present? && description.present?
-      term = @team.terms.find_or_initialize_by(name: name)
-      term.update_attributes!(name: name, description: description)
+    term = @team.terms.from_text(params[:text])
+    if term.save
       render json: term, serializer: TermSerializer, serializer_params: {response_type: 'ephemeral'}
     else
       term = OpenStruct.new(
